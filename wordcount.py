@@ -47,6 +47,74 @@ import sys
 # and builds and returns a word/count dict for it.
 # Then print_words() and print_top() can just call the utility function.
 
+
+def print_words(filename):
+    with open(filename, 'r') as f:
+        doc = f.read()
+        listedOne = doc.split(' ')
+        for a in listedOne:
+            if a.find('\n'):
+                x = listedOne.index(a)
+                replacement = a.split('\n')
+                if len(replacement) == 2:
+                    listedOne[x] = replacement[0]
+                    listedOne.append(replacement[1])
+                else:
+                    listedOne[x] = replacement
+        for word in listedOne:
+            if len(word) == 1:
+                x = listedOne.index(word)
+                listedOne[x] = listedOne[x][0]
+        wordList = []
+        for word in listedOne:
+            if word not in wordList:
+                wordList.append(word)
+        wordDict = {}
+        for s in wordList:
+            count = 0
+            for w in listedOne:
+                if s == w:
+                    count += 1
+            wordDict[s] = count
+    return wordDict
+
+
+def print_top(filename):
+    with open(filename, 'r') as f:
+        doc = f.read()
+        listedOne = doc.split(' ')
+        for a in listedOne:
+            if a.find('\n'):
+                x = listedOne.index(a)
+                replacement = a.split('\n')
+                if len(replacement) == 2 :
+                    listedOne[x] = replacement[0]
+                    listedOne.append(replacement[1])
+                else:
+                    listedOne[x] = replacement
+        for word in listedOne:
+            if len(word) == 1:
+                x = listedOne.index(word)
+                listedOne[x] = listedOne[x][0]
+        wordList = []
+        for word in listedOne:
+            if word not in wordList:
+                wordList.append(word)
+        sortingList = []
+        for s in wordList:
+            count = 0
+            for w in listedOne:
+                if s == w:
+                    count += 1
+            sortingList.append([s, count])
+        sortingList.sort(key=lambda x: x[1])
+        top_dict = {}
+        v = 0
+        while v < 20:
+            top_dict[sortingList[v]] = sortingList[v][1]
+    return top_dict
+
+
 ###
 
 # This basic command line argument parsing code is provided and
